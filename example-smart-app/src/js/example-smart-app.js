@@ -6,12 +6,7 @@
       console.log('Loading error', arguments);
       ret.reject();
     }
-    function getMedicationName(medCodings) {
-      var coding = medCodings.find(function(c) {
-        return c.system == "http://www.nlm.nih.gov/research/umls/rxnorm";
-      });
-      return coding && coding.display || "Unnamed Medication(TM)";
-    }
+   
 
    function displayMedication (medCodings) {
       $('#med_list').innerHTML += "<li> " + getMedicationName(medCodings) + "</li>";
@@ -45,7 +40,7 @@
                     });
                 }
                 else {
-                    med_list.innerHTML = "No medications found for the selected patient";
+                    $('#med_list').innerHTML = "No medications found for the selected patient";
                 }
             });                                                                                                                        
         
@@ -132,6 +127,13 @@
 
     return getQuantityValueAndUnit(formattedBPObservations[0]);
   }
+
+ function getMedicationName(medCodings) {
+      var coding = medCodings.find(function(c) {
+        return c.system == "http://www.nlm.nih.gov/research/umls/rxnorm";
+      });
+      return coding && coding.display || "Unnamed Medication(TM)";
+    }
 
   function getQuantityValueAndUnit(ob) {
     if (typeof ob != 'undefined' &&
