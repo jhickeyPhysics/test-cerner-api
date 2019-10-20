@@ -103,25 +103,14 @@
         }
       );
      var med_list = document.getElementById('med_list');
-        function getPatientName(pt) {
-            if (pt.name) {
-                var names = pt.name.map(function(name) {
-                    return name.given.join(" ") + " " + name.family.join(" ");
-                });
-                return names.join(" / ");
-            } else {
-                return "anonymous";
-            }
-        }
+       
         function getMedicationName(medCodings) {
             var coding = medCodings.find(function(c) {
                 return c.system == "http://www.nlm.nih.gov/research/umls/rxnorm";
             });
             return coding && coding.display || "Unnamed Medication(TM)";
         }
-        function displayPatient (pt) {
-            document.getElementById('name').innerHTML = getPatientName(pt);
-        }
+      
         function displayMedication (medCodings) {
             med_list.innerHTML += "<li> " + getMedicationName(medCodings) + "</li>";
         }
