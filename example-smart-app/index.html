@@ -115,9 +115,6 @@
             med_list.innerHTML += "<li> " + getMedicationName(medCodings) + "</li>";
         }
         FHIR.oauth2.ready(function(smart) {
-            smart.patient.read().then(function(pt) {
-                displayPatient (pt);
-            });
             smart.patient.api.fetchAllWithReferences(
                 { type: "MedicationOrder" },
                 [ "MedicationOrder.medicationReference" ]
