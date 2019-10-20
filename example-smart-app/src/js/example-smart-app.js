@@ -1,26 +1,3 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@jhickeyPhysics 
-Learn Git and GitHub without any code!
-Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
-
-
-0
-01.9kjhickeyPhysics/smart-on-fhir-tutorial
-forked from cerner/smart-on-fhir-tutorial
- Code Pull requests 0 Projects 0 Security Insights Settings
-smart-on-fhir-tutorial/example-smart-app/src/js/example-smart-app.js
-@jhickeyPhysics jhickeyPhysics Update example-smart-app.js
-f651a5f yesterday
-@kpshek@jhickeyPhysics
-136 lines (116 sloc)  3.94 KB
-  
 (function(window){
   window.extractData = function() {
     var ret = $.Deferred();
