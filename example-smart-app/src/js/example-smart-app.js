@@ -6,7 +6,12 @@
       console.log('Loading error', arguments);
       ret.reject();
     }
+   
 
+   function displayMedication (medCodings) {
+      $('#med_list').innerHTML += "<li> " + getMedicationName(medCodings) + "</li>";
+   }
+    
     function onReady(smart)  {
       if (smart.hasOwnProperty('patient')) {
         var patient = smart.patient;
@@ -22,7 +27,23 @@
                       }
                     }
                   });
-
+       smart.patient.api.fetchAllwithReferences({type: 'MedicationOrder'}, ["MedicationOrder.medicationsReferences"]).then(function(results, refs), {
+                if (results.length) {
+                    $('#med_list').innerHTML = "";
+                    results.forEach(function(prescription) {
+                        if (prescription.medicationCodeableConcept) {
+                            displayMedication(prescription.medicationCodeableConcept.coding);
+                        } else if (prescription.medicationReference) {
+                            var med = refs(prescription, prescription.medicationReference);
+                            displayMedication(med && med.code.coding || []);
+                        }
+                    });
+                }
+                else {
+                    $('#med_list').innerHTML = "No medications found for the selected patient";
+                }
+            });                                                                                                                        
+        
         $.when(pt, obv).fail(onError);
 
         $.when(pt, obv).done(function(patient, obv) {
@@ -51,6 +72,7 @@
           p.lname = lname;
           p.height = getQuantityValueAndUnit(height[0]);
           p.weight = getQuantityValueAndUnit(weight[0]);
+          
           if (typeof systolicbp != 'undefined')  {
             p.systolicbp = systolicbp;
           }
@@ -105,6 +127,13 @@
 
     return getQuantityValueAndUnit(formattedBPObservations[0]);
   }
+
+ function getMedicationName(medCodings) {
+      var coding = medCodings.find(function(c) {
+        return c.system == "http://www.nlm.nih.gov/research/umls/rxnorm";
+      });
+      return coding && coding.display || "Unnamed Medication(TM)";
+    }
 
   function getQuantityValueAndUnit(ob) {
     if (typeof ob != 'undefined' &&
