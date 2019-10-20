@@ -5,7 +5,8 @@
     function onError() {
       console.log('Loading error', arguments);
       ret.reject();
-    }   
+    }
+
     function onReady(smart)  {
       if (smart.hasOwnProperty('patient')) {
         var patient = smart.patient;
@@ -21,7 +22,7 @@
                       }
                     }
                   });
-       
+
         $.when(pt, obv).fail(onError);
 
         $.when(pt, obv).done(function(patient, obv) {
@@ -50,7 +51,6 @@
           p.lname = lname;
           p.height = getQuantityValueAndUnit(height[0]);
           p.weight = getQuantityValueAndUnit(weight[0]);
-          
           if (typeof systolicbp != 'undefined')  {
             p.systolicbp = systolicbp;
           }
@@ -133,3 +133,4 @@
   };
 
 })(window);
+
